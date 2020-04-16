@@ -19,7 +19,7 @@ class Home {
         $EID = $app['tsugi']->context->launch->ltiRawParameter('lis_person_sourcedid', $app['tsugi']->user->id);
         
         $context = array();
-    	$context['style'] = $CFG->getCurrentFileUrl('static/user.css');
+    	$context['style'] = str_replace("\\","/",$CFG->getCurrentFileUrl('static/user.css')) .'?t='. time();
 	    $context['submit'] = addSession(str_replace("\\","/",$CFG->getCurrentFileUrl('index.php')));
         
         $rows = $PDOX->allRowsDie("SELECT answer, updated FROM {$p}Orientation_Questions
