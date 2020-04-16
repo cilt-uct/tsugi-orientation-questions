@@ -83,13 +83,13 @@
             $('#message').show().html(tmpl(t, args));
             clearTimeout(clear_msg_timeout);
             if (_fade) {
-                //clear_msg_timeout = setTimeout(function(){ hideMessage(); }, 5000);
+                clear_msg_timeout = setTimeout(function(){ hideMessage(); }, 5000);
             }
         }
 
         function doPost() {
             if ($("#form input[type=radio]:checked").length > 0) {
-                showMessage('tmpl-loading', {});
+                showMessage('tmpl-loading', {}, false);
 
                 var jqxhr = $.post('{{submit}}', 
                     { "val": $("#form input[type=radio]:checked").val() },
@@ -112,7 +112,7 @@
 
         $("#form").on('change', 'input[type=radio]', function(event){
             clearTimeout(save_timer);
-            showMessage('tmpl-loading', {});
+            showMessage('tmpl-loading', {}, false);
             save_timer = setTimeout(function(){ doPost(); }, 1000);
         });
     });
