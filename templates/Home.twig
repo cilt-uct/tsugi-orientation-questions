@@ -1,0 +1,70 @@
+{% extends "@Tsugi/Page.twig" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{style}}"/>
+    <script type="text/javascript">
+    if (!String.prototype.endsWith) {
+        String.prototype.endsWith = function(searchStr, Position) {
+            // This works much better than >= because
+            // it compensates for NaN:
+            if (!(Position < this.length))
+                Position = this.length;
+            else
+                Position |= 0; // round position
+            return this.substr(Position - searchStr.length,
+                                searchStr.length) === searchStr;
+        };
+    }
+    if (!String.prototype.startsWith) {
+            String.prototype.startsWith = function(searchString, position){
+            return this.substr(position || 0, searchString.length) === searchString;
+        };
+    }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <form class="form-inline text-left" method="post" target="_self" id="metadata">
+                    <h4>I've looked at the requirements for all my courses for the coming term,<br/> and think that:</h4>
+                    <ul>
+                        <li>
+                            <input type="radio" id="option-1" name="selector" value="1">
+                            <label for="option-1">
+                                I'm good to go. <small>I'm ready to start and aim to complete this term successfully online.</small>
+                            </label>
+                            
+                            <div class="check"></div>
+                        </li>
+                        <li>
+                            <input type="radio" id="option-0" name="selector" value="0">
+                            <label for="option-0">
+                                I'm not sure. <small>I may have some challenges, and need to discuss my studies with an advisor.</small>
+                            </label>
+                            
+                            <div class="check"><div class="inside"></div></div>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <div class="col-xs-12" id="message">
+                            <div class="alert alert-success" role="alert">
+                                Thank you! Your response has been saved|updated.
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block footer %}
+    <script src="{{path}}/js/moment.min.js"></script>
+    <script>
+    $(function() {
+        
+    });
+    </script>
+{% endblock %}
