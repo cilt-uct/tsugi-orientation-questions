@@ -25,13 +25,14 @@
 
 {% block content %}
     <section class="container">
+        <!-- {{ selected | json_encode() }} {{ selected.answer }} -->
         <div class="row">
-            <div class="col-md-9">
-                <form class="form-inline text-left" method="post" target="_self" id="metadata">
+            <div class="col-xs-12">
+                <form class="form-inline text-left" method="post" target="_self" id="form" name="form">
                     <h4>I've looked at the requirements for all my courses for the coming term,<br/> and think that:</h4>
                     <ul>
                         <li>
-                            <input type="radio" id="option-1" name="selector" value="1">
+                            <input type="radio" id="option-1" name="selector" value="1" {% if (selected.answer == "1") %}checked checked="true" selected{% endif %}>
                             <label for="option-1">
                                 I'm good to go. <small>I'm ready to start and aim to complete this term successfully online.</small>
                             </label>
@@ -39,7 +40,7 @@
                             <div class="check"></div>
                         </li>
                         <li>
-                            <input type="radio" id="option-0" name="selector" value="0">
+                            <input type="radio" id="option-0" name="selector" value="0" {% if (selected.answer == "0") %}checked checked="true" selected{% endif %}>
                             <label for="option-0">
                                 I'm not sure. <small>I may have some challenges, and need to discuss my studies with an advisor.</small>
                             </label>
@@ -48,10 +49,7 @@
                         </li>
                     </ul>
                     <div class="row">
-                        <div class="col-xs-12" id="message">
-                            <div class="alert alert-success" role="alert">
-                                Thank you! Your response has been saved|updated.
-                            </div>
+                        <div class="col-xs-8" id="message">
                         </div>
                     </div>
                 </form>
@@ -64,7 +62,56 @@
     <script src="{{path}}/js/moment.min.js"></script>
     <script>
     $(function() {
-        
+        var save_timer = null,
+            clear_msg_timeout = null,
+            updated = {% if (selected.answer == "-1") %}false{% else %}true{% endif %};
+
+        function hideMessage(fast) {
+            var _fast = fast || false;
+            clearTimeout(clear_msg_timeout);
+            if (_fast) {
+                $('#message').hide();
+            } else {
+                $('#message').fadeOut(1000);
+            }
+        }
+
+        function showMessage(t, args, fade) {
+            var _fade = fade || true;
+            $('#message').show().html(tmpl(t, args));
+            clearTimeout(clear_msg_timeout);
+            if (_fade) {
+                clear_msg_timeout = setTimeout(function(){ hideMessage(); }, 5000);
+            }
+        }
+
+        function doPost() {
+            if ($("#form input[type=radio]:checked").length > 0) {
+                showMessage('tmpl-loading', {});
+
+                var jqxhr = $.post('{{submit}}', 
+                    { "val": $("#form input[type=radio]:checked").val() },
+                    function(result) {
+                        if (result['done'] == 1) {
+                            showMessage('tmpl-saved', {update: updated});
+                            updated = true;
+                        } else {
+                            showMessage('tmpl-error', {});
+                        }
+                    }, 'json')
+                    .fail(function() {
+                        showMessage('tmpl-error', {});
+                    });
+            } else {
+               showMessage('tmpl-no-selection', {});
+            }
+        }
+
+        $("#form").on('change', 'input[type=radio]', function(event){
+            clearTimeout(save_timer);
+            save_timer = setTimeout(function(){ doPost(); }, 1000);
+        });
     });
     </script>
+    {{ source('tmpl.html', ignore_missing = true) }}
 {% endblock %}

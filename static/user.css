@@ -81,19 +81,98 @@ ul li .check::before {
 	-webkit-transition: background 0.1s linear;
 }
 
-input[type=radio]:checked ~ .check {
-  border: 5px solid #3c763d;
+input[type=radio]#option-0:checked ~ .check {
+  border: 5px solid #D16014;
 }
 
-input[type=radio]:checked ~ .check::before{
-  background: #3c763d;
+input[type=radio]#option-0:checked ~ .check::before{
+  background: #D16014;
 }
 
-input[type=radio]:checked ~ label{
-  color: #3c763d;
+input[type=radio]#option-0:checked ~ label{
+  color: #D16014;
+}
+
+input[type=radio]#option-1:checked ~ .check {
+  border: 5px solid #8EA604;
+}
+
+input[type=radio]#option-1:checked ~ .check::before{
+  background: #8EA604;
+}
+
+input[type=radio]#option-1:checked ~ label{
+  color: #8EA604;
 }
 
 #message {
   margin-top: 45px;
 }
 
+#message .alert .fas {
+  margin-right: 10px;
+}
+
+/*Typing Loader*/
+.typing_loader{
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  -webkit-animation: typing 1s linear infinite alternate;
+     -moz-animation: Typing 1s linear infinite alternate;
+          animation: typing 1s linear infinite alternate;
+  margin: 46px auto; /* Not necessary- its only for layouting*/  
+  position: relative;
+  left: -12px;
+}
+
+@-webkit-keyframes typing{
+  0%{
+      background-color: rgba(0,0,0, 1);
+      box-shadow: 12px 0px 0px 0px rgba(0,0,0,0.2), 
+                  24px 0px 0px 0px rgba(0,0,0,0.2);
+    }
+  25%{ 
+      background-color: rgba(0,0,0, 0.4);
+      box-shadow: 12px 0px 0px 0px rgba(0,0,0,2), 
+                  24px 0px 0px 0px rgba(0,0,0,0.2);
+  }
+  75%{ background-color: rgba(0,0,0, 0.4);
+      box-shadow: 12px 0px 0px 0px rgba(0,0,0,0.2), 
+                  24px 0px 0px 0px rgba(0,0,0,1);
+    }
+}
+
+@-moz-keyframes typing{
+ 0%{
+      background-color: rgba(0,0,0, 1);
+      box-shadow: 12px 0px 0px 0px rgba(0,0,0,0.2), 
+                  24px 0px 0px 0px rgba(0,0,0,0.2);
+    }
+  25%{ 
+      background-color: rgba(0,0,0, 0.4);
+      box-shadow: 12px 0px 0px 0px rgba(0,0,0,2), 
+                  24px 0px 0px 0px rgba(0,0,0,0.2);
+  }
+  75%{ background-color: rgba(0,0,0, 0.4);
+      box-shadow: 12px 0px 0px 0px rgba(0,0,0,0.2), 
+                  24px 0px 0px 0px rgba(0,0,0,1);
+    }
+}
+
+@keyframes typing{
+ 0%{
+      background-color: rgba(0,0,0, 1);
+      box-shadow: 12px 0px 0px 0px rgba(0,0,0,0.2), 
+                  24px 0px 0px 0px rgba(0,0,0,0.2);
+    }
+  25%{ 
+      background-color: rgba(0,0,0, 0.4);
+      box-shadow: 12px 0px 0px 0px rgba(0,0,0,2), 
+                  24px 0px 0px 0px rgba(0,0,0,0.2);
+  }
+  75%{ background-color: rgba(0,0,0, 0.4);
+      box-shadow: 12px 0px 0px 0px rgba(0,0,0,0.2), 
+                  24px 0px 0px 0px rgba(0,0,0,1);
+    }
+}
