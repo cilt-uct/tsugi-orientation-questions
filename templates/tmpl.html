@@ -4,7 +4,7 @@
     </div>
 </script>
 <script type="text/x-tmpl" id="tmpl-saved">
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-info" role="alert">
         <i class="fas fa-check"></i>
         Thank you! Your response has been {% if (o.update) { %}updated{% } else { %}saved{% } %}.
     </div>
@@ -19,4 +19,8 @@
     <div class="alert alert-info" role="alert">
         Please select an option...
     </div>
+</script>
+<script type="text/x-tmpl" id="tmpl-last-saved">
+    <i class="far fa-clock"></i>&nbsp;
+    {% if (o.updated != '') { %}Last saved: <span>{%=moment(o.updated).calendar()%}</span>{% } else { %}Last saved: <span>Never</span> {% } %}
 </script>

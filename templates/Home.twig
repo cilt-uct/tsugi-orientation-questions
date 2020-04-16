@@ -48,10 +48,10 @@
                             <div class="check"><div class="inside"></div></div>
                         </li>
                     </ul>
-                    <div class="row">
-                        <div class="col-xs-8" id="message">
-                        </div>
+                    <div id="message_container">
+                        <div id="message"></div>
                     </div>
+                    <p id="last">&nbsp;</p>
                 </form>
             </div>
         </div>
@@ -65,6 +65,8 @@
         var save_timer = null,
             clear_msg_timeout = null,
             updated = {% if (selected.answer == "-1") %}false{% else %}true{% endif %};
+
+        $("#last").html(tmpl('tmpl-last-saved', {'updated' : '{{ selected.updated }}'}));
 
         function hideMessage(fast) {
             var _fast = fast || false;
@@ -81,7 +83,7 @@
             $('#message').show().html(tmpl(t, args));
             clearTimeout(clear_msg_timeout);
             if (_fade) {
-                clear_msg_timeout = setTimeout(function(){ hideMessage(); }, 5000);
+                //clear_msg_timeout = setTimeout(function(){ hideMessage(); }, 5000);
             }
         }
 
@@ -94,6 +96,7 @@
                     function(result) {
                         if (result['done'] == 1) {
                             showMessage('tmpl-saved', {update: updated});
+                            $("#last").html(tmpl('tmpl-last-saved', {'updated' : Date.now()}));
                             updated = true;
                         } else {
                             showMessage('tmpl-error', {});
@@ -109,6 +112,7 @@
 
         $("#form").on('change', 'input[type=radio]', function(event){
             clearTimeout(save_timer);
+            showMessage('tmpl-loading', {});
             save_timer = setTimeout(function(){ doPost(); }, 1000);
         });
     });
