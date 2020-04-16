@@ -20,7 +20,7 @@ class Home {
         
         $context = array();
     	$context['style'] = $CFG->getCurrentFileUrl('static/user.css');
-	    $context['submit'] = addSession('/tsugi/mod/tsugi-orientation-questions/index.php'); //$CFG->getCurrentFileUrl('index.php'));
+	    $context['submit'] = addSession($CFG->getCurrentFileUrl('index.php'));
         
         $rows = $PDOX->allRowsDie("SELECT answer FROM {$p}Orientation_Questions
                     WHERE EID = :EID and user_id = :user_id",
